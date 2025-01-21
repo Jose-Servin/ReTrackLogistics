@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "djoser",
     "core",
     "clients",
+    "assets",
 ]
 
 MIDDLEWARE = [
