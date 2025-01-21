@@ -56,3 +56,13 @@ class UpdateClientContactSerializer(serializers.ModelSerializer):
             "email",
             "phone_number",
         ]
+
+    def validate_phone_number(self, value):
+        """
+        Check that the phone number is exactly 10 digits.
+        """
+        if not value.isdigit() or len(value) != 10:
+            raise serializers.ValidationError(
+                "The phone number must be exactly 10 digits."
+            )
+        return value
