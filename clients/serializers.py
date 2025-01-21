@@ -45,3 +45,14 @@ class ClientContactSerializer(serializers.ModelSerializer):
             "email",
             "phone_number",
         ]
+
+
+class UpdateClientContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ClientContact
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+        ]

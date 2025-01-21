@@ -1,14 +1,13 @@
 from django.db import models
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, EmailValidator
 
 
 class Client(models.Model):
-    """
-    Represents a client with basic contact information and address details.
-    """
 
     name = models.CharField(max_length=255, verbose_name="Client Name")
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(
+        max_length=255, unique=True, validators=[EmailValidator()]
+    )
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
@@ -50,7 +49,9 @@ class ClientContact(models.Model):
     )
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(
+        max_length=255, unique=True, validators=[EmailValidator()]
+    )
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -7,6 +7,7 @@ from .serializers import (
     ClientSerializer,
     ClientContactSerializer,
     UpdateClientSerializer,
+    UpdateClientContactSerializer,
 )
 
 
@@ -30,5 +31,12 @@ class ClientContactViewSet(ModelViewSet):
     A viewset for viewing and editing client contact instances.
     """
 
+    http_method_names = ["get", "post", "patch", "delete", "head", "options"]
+
     queryset = ClientContact.objects.all()
     serializer_class = ClientContactSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == "PATCH":
+            return UpdateClientContactSerializer
+        return ClientContactSerializer
