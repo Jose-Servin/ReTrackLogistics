@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Client, ClientContact
+from .models import Client, ClientContact, Asset, Tracker
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -66,3 +66,32 @@ class UpdateClientContactSerializer(serializers.ModelSerializer):
                 "The phone number must be exactly 10 digits."
             )
         return value
+
+
+class AssetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asset
+        fields = [
+            "id",
+            "name",
+            "description",
+            "industry",
+            "owner",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class TrackerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tracker
+        fields = [
+            "id",
+            "name",
+            "description",
+            "asset",
+            "created_at",
+            "updated_at",
+            "sensor_data",
+            "status",
+        ]

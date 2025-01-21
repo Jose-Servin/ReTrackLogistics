@@ -24,7 +24,6 @@ admin.site.site_header = "ReTrack Logistics"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("retrack/internal/", include("clients.urls")),
-    path("retrack/resources/", include("assets.urls")),
+    path("api/", include("retrack.urls")),
     path("__debug__/", include(debug_toolbar.urls)),
 ]
