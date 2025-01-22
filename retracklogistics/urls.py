@@ -18,12 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import debug_toolbar
+from .api_router import urlpatterns as api_urls
 
 admin.site.site_header = "ReTrack Logistics"
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("retrack.urls")),
+    path("api/", include(api_urls)),  # Include all API endpoints from api_router.py
     path("__debug__/", include(debug_toolbar.urls)),
 ]

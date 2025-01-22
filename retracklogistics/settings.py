@@ -56,7 +56,9 @@ INSTALLED_APPS = [
     "django_extensions",
     "djoser",
     "core",
-    "retrack",
+    "registry",
+    "inventory",
+    "tracking",
 ]
 
 MIDDLEWARE = [
