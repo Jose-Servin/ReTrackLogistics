@@ -24,6 +24,7 @@ load_dotenv(env)
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 DB_PASS = os.getenv("DB_PASS")
+POSTGRES_PASS = os.getenv("POSTGRES_PASS")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -102,15 +103,14 @@ WSGI_APPLICATION = "retracklogistics.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "RETRACK_DB",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
-        "USER": "root",
-        "PASSWORD": f"{DB_PASS}",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "retrack_db",
+        "USER": "postgres",
+        "PASSWORD": f"{POSTGRES_PASS}",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
