@@ -1,5 +1,6 @@
 from django.db import models
-from django.core.validators import RegexValidator, EmailValidator
+from django.core.validators import EmailValidator
+from core.validators import validate_phone_number, validate_zip_code
 
 
 class Client(models.Model):
@@ -8,7 +9,10 @@ class Client(models.Model):
     email = models.EmailField(
         max_length=255, unique=True, validators=[EmailValidator()]
     )
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(
+        max_length=20,
+        validators=[validate_phone_number],
+    )
     address = models.CharField(max_length=255, blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     state = models.CharField(max_length=100, blank=True, null=True)
@@ -16,12 +20,7 @@ class Client(models.Model):
         max_length=20,
         blank=True,
         null=True,
-        validators=[
-            RegexValidator(
-                regex=r"^\d{5}(-\d{4})?$",
-                message="Enter a valid ZIP code (e.g., 12345 or 12345-6789).",
-            )
-        ],
+        validators=[validate_zip_code],
     )
     country = models.CharField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -37,14 +36,19 @@ class Contact(models.Model):
     """
 
     client = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name="contacts"
+        Client,
+        on_delete=models.PROTECT,
+        related_name="contacts",
     )
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(
         max_length=255, unique=True, validators=[EmailValidator()]
     )
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(
+        max_length=20,
+        validators=[validate_phone_number],
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
