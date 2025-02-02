@@ -16,7 +16,13 @@ class Tracker(models.Model):
     tracker_type = models.CharField(
         max_length=50, choices=TRACKER_TYPE_CHOICES, default="GPS"
     )
-    asset = models.ForeignKey(Asset, on_delete=models.PROTECT, related_name="trackers")
+    asset = models.ForeignKey(
+        Asset,
+        on_delete=models.PROTECT,
+        related_name="trackers",
+        blank=True,
+        null=True,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -31,8 +37,13 @@ class Tracker(models.Model):
         max_length=1, choices=STATUS_CHOICES, default=STATUS_ACTIVE
     )
 
+    def save(self, *args, **kwargs):
+        """Automatically set status based on asset assignment."""
+        self.status = self.STATUS_ACTIVE if self.asset else self.STATUS_INACTIVE
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} - {'Active' if self.status == self.STATUS_ACTIVE else 'Inactive'}"
 
 
 class SensorDataLog(models.Model):
