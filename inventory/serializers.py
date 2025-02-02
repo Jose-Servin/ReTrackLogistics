@@ -14,3 +14,9 @@ class AssetSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
+
+
+class UpdateAssetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Asset
+        fields = ["name", "description", "industry", "owner"]
