@@ -1,6 +1,10 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Tracker, SensorDataLog
-from .serializers import TrackerSerializer, SensorDataLogSerializer
+from .serializers import (
+    TrackerSerializer,
+    SensorDataLogSerializer,
+    CreateTrackerSerializer,
+)
 
 
 class TrackerViewSet(ModelViewSet):
@@ -10,6 +14,11 @@ class TrackerViewSet(ModelViewSet):
 
     queryset = Tracker.objects.all()
     serializer_class = TrackerSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return CreateTrackerSerializer
+        return TrackerSerializer
 
 
 class SensorDataLogViewSet(ModelViewSet):

@@ -4,9 +4,8 @@ from inventory.models import Asset
 
 
 class TrackerSerializer(serializers.ModelSerializer):
-    # Serializing related Asset model's fields as needed, for example, just the id
     asset_id = serializers.PrimaryKeyRelatedField(
-        queryset=Asset.objects.all(), source="asset"
+        queryset=Asset.objects.all(), source="asset", required=False, allow_null=True
     )
 
     class Meta:
@@ -21,6 +20,16 @@ class TrackerSerializer(serializers.ModelSerializer):
             "updated_at",
             "status",
         ]
+
+
+class CreateTrackerSerializer(serializers.ModelSerializer):
+    asset_id = serializers.PrimaryKeyRelatedField(
+        queryset=Asset.objects.all(), source="asset", required=False, allow_null=True
+    )
+
+    class Meta:
+        model = Tracker
+        fields = ["id", "name", "description", "tracker_type", "asset_id"]
 
 
 class SensorDataLogSerializer(serializers.ModelSerializer):
